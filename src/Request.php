@@ -1,6 +1,6 @@
 <?php
 
-namespace nir\HeadHunter;
+namespace nir007\HeadHunter;
 
 class Request
 {
