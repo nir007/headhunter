@@ -17,7 +17,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "nir\\HeadHunter\\": "src/"
+      "nir007\\HeadHunter\\": "src/"
     }
   }
 }
