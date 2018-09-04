@@ -1,0 +1,23 @@
+{
+  "name": "nir/headhunter",
+  "description": "PHP library hh API",
+  "keywords": ["hh", "api"],
+  "type": "package",
+  "require": {
+    "php": ">=7.0.0",
+    "curl/curl": "^1.5",
+    "zendframework/zend-diactoros": "^1.0"
+  },
+  "authors": [
+    {
+      "name": "Roman Petrin",
+      "email": "apinroman@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "nir\\HeadHunter\\": "src/"
+    }
+  }
+}
