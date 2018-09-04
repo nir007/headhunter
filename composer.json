@@ -3,6 +3,8 @@
   "description": "PHP library hh API",
   "keywords": ["hh", "api"],
   "type": "package",
+  "minimum-stability": "dev",
+  "license": "MIT",
   "require": {
     "php": ">=7.0.0",
     "curl/curl": "^1.5",
