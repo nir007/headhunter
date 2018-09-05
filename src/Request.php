@@ -35,7 +35,7 @@ class Request
 	public function get($uri, $params = [])
 	{
 		$uri = $this->makeUriWithQuery($uri, $params);
-		return $this->execute('GET', $uri);
+		return $this->execute($uri, 'GET');
 	}
 	/**
 	 * @param string $uri
@@ -45,7 +45,7 @@ class Request
 	public function post($uri, $params = [])
 	{
 		return $this->execute(
-			'POST', $uri, ['query' => $params]
+			$uri, 'POST', ['query' => $params]
 		);
 	}
 
@@ -57,7 +57,7 @@ class Request
 	public function putJson($uri, $params = [])
 	{
 		return $this->execute(
-			'PUT', $uri, ['json' => $params]
+			$uri, 'PUT', ['json' => $params]
 		);
 	}
 	/**
@@ -68,7 +68,7 @@ class Request
 	public function delete($uri, $params = [])
 	{
 		$uri = $this->makeUriWithQuery($uri, $params);
-		return $this->execute('DELETE', $uri);
+		return $this->execute($uri, 'DELETE');
 	}
 
 	/**
