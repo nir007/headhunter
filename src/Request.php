@@ -2,13 +2,28 @@
 
 namespace nir007\HeadHunter;
 
+use Zend\Diactoros\Uri;
+use pdeans\Http\Client;
+use Zend\Diactoros\Request as DiactorosRequest;
+
 class Request
 {
 	const BASE_URL = 'https://api.hh.ru/';
-	protected $headers = [];
 
-	public function __construct($token = null)
+	protected $client;
+	protected $headers = [
+		'UserAgent' => 'app (test@test.com)'
+	];
+
+	public function __construct($userAgent = null, $token = null)
 	{
+		$this->client = new Client(
+			[
+				CURLOPT_SSL_VERIFYPEER => 0,
+				CURLOPT_SSL_VERIFYHOST => 0,
+			]
+		);
+		if ($userAgent) $this->setUserAgent($userAgent);
 		if ($token) $this->setToken($token);
 	}
 
@@ -57,6 +72,16 @@ class Request
 	}
 
 	/**
+	 * @param string $userAgent
+	 * @return $this
+	 */
+	public function setUserAgent($userAgent)
+	{
+		$this->headers = ['UserAgent' => $userAgent];
+		return $this;
+	}
+
+	/**
 	 * @param string $token
 	 * @return $this
 	 */
@@ -80,14 +105,23 @@ class Request
 	}
 
 	/**
-	 * @param string $method
 	 * @param string $uri
+	 * @param string $method
 	 * @param array $options
 	 * @return array|null
 	 */
-	protected function execute($method, $uri, array $options = [])
+	protected function execute($uri, $method, array $options = [])
 	{
-		return json_decode("");
+		$request = (new DiactorosRequest($uri, $method, $options))
+			->withUri(new Uri($uri))
+			->withMethod($method)
+			->withAddedHeader('Authorization', $this->headers['Authorization'])
+			->withAddedHeader('User-Agent', $this->headers['UserAgent'])
+			->withAddedHeader('Content-Type', 'application/json');
+
+		$response = $this->client->sendRequest($request);
+
+		return json_decode($response->getBody(), true);
 	}
 
 	/**
