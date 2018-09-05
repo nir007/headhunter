@@ -103,7 +103,7 @@ class Request
     protected function makeUriWithQuery($uri, array $params = [])
     {
         if (!empty($params)) {
-            $uri .= '?' . $this->makeQueryString($params);
+            $uri .= '?' . http_build_query($params);
         }
         return $uri;
     }
@@ -111,10 +111,9 @@ class Request
     /**
      * @param string $uri
      * @param string $method
-     * @param array $options
      * @return array|null
      */
-    protected function execute($uri, $method, array $options = [])
+    protected function execute($uri, $method)
     {
         $request = (new DiactorosRequest())
             ->withUri(new Uri(self::BASE_URL . $uri))
@@ -126,14 +125,5 @@ class Request
         $response = $this->client->sendRequest($request);
 
         return json_decode($response->getBody(), true);
-    }
-
-    /**
-     * @param $params
-     * @return string
-     */
-    protected function makeQueryString($params = [])
-    {
-        return http_build_query($params);
     }
 }
